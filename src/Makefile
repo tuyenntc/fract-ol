@@ -1,31 +1,39 @@
 
-CC=gcc
-CFLAGS=-Wall -Wextra -Werror
+NAME = fractol
+SRC = main.c utils.c mandelbrot.c julia.c 
 
-X11= -L/opt/X11/lib
-MLX=-L../minilibx -lmlx -lX11 -lXext -framework OpenGL -framework AppKit
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror -I../libft
+X11 = -L/opt/X11/lib
+MLX = -L../minilibx -lmlx -lX11 -lXext -framework OpenGL -framework AppKit
 
-NAME=fractol
-SRC= main.c utils.c mandelbrot.c julia.c 
+LIBFT_DIR = ../libft
+LIBFT = $(LIBFT_DIR)/libft.a
+LIB = -L$(LIBFT_DIR) -lft
+LDFLAGS = $(LIB)
 
-OBJ=$(SRC:.c=.o)
+OBJ = $(SRC:.c=.o)
 
-LIBC=ar rcs
-RM=rm -rf
+RM = rm -rf
 
 all: $(NAME)
 
-$(NAME):$(SRC)
-	$(CC) $(CFLAGS) $(X11) $(MLX) $(OBJ) -o $(NAME)
+$(NAME):$(LIBFT) $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) $(LDFLAGS) $(X11) $(MLX) -o $(NAME)
+
+$(LIBFT):
+	make -C $(LIBFT_DIR)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
+	make -C $(LIBFT_DIR) clean
 	$(RM) $(OBJ)
-
+	
 fclean: clean
 		$(RM) $(NAME)
+		make -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
