@@ -33,7 +33,7 @@ typedef struct s_fractal
 }	t_fractal;
 
 void	ft_pixel_put(t_data *data, int x, int y, int color);
-void	init_fractal(t_fractal *fract);
+void	init_fractal(t_fractal *fract, double c_re, double c_im);
 int		get_color(int iter, int max_iter);
 void	draw_mandelbrot(t_data *data, t_fractal *fract);
 void	draw_julia(t_data *data, t_fractal *fract);
