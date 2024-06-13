@@ -29,22 +29,6 @@
 # define PASTELYELLOW 0xFFFF99
 # define PASTELPINK 0xFFB6C1
 
-
-# define LEFT_KEY 123
-# define RIGHT_KEY 124
-# define DOWN_KEY 125
-# define UP_KEY 126
-# define ESC_KEY 53
-# define MOUSE_UP 4
-# define MOUSE_DOWN 5
-
-
-typedef struct	s_complex
-{
-	double	x;//real
-	double	y;//img
-}	t_complex;
-
 typedef struct s_data
 {
 	void	*img;
@@ -54,22 +38,42 @@ typedef struct s_data
 	int		line_len;
 }	t_data;
 
+typedef struct s_complex
+{
+	double	r;
+	double	i;
+} t_complex;
+
 typedef struct s_fractol
 {
 	char	*name;
 	void	*mlx;
-	void	*window;
-	t_data	img;
+	void	*win;
 
+	t_data	img;
 	double	escape_value;
 	int		iter;
-	double	shift_x;
-	double	shift_y;
-	double	zoom;
-//	int		color;
-	double	julia_x;
-	double	julia_y;
+	
+	double	shift_r;
+	double	shift_i;
 
+	double	zoom;
+	double	julia_r;
+	double	julia_i;
+	
+//	t_complex	z;
+//	t_complex	c;
+//	t_complex	c_julia;
+	
+//	double	cmp_real;
+//	double	cmp_imag;
+
+//	double	real_min;
+//	double	real_max;
+//	double	max_iter;
+//	double	c_re;
+//	double	c_im;
+//	int		color;
 
 }	t_fractol;
 
@@ -80,29 +84,34 @@ typedef	struct s_scaling_range
 	double	max;
 }	t_range;
 
-size_t		ft_strlen(const char *s);
-void		ft_putstr_fd(char *s, int fd);
-int 		ft_strncmp(char *s1, char *s2, int n);
 
+int			ft_strncmp(char *s1, char *s2, int n);
+void		ft_putstr_fd(char *s, int fd);
+double		ato_dbl(char *s);
+
+void		instruction(void);
 void		init_fractol(t_fractol *fract);
 void		render_fractol(t_fractol *fract);
 
 int			blend_color(int color1, int color2, double t);
 void		shift_color(t_fractol *fract);
 
-double		scaling_range(t_scaling points);
+//events mngm
+int			handle_key(int keysym, t_fractol *fract);
+int			handle_mouse(int btn, int x, int y, t_fractol *fract);
+int			handle_exit(t_fractol *fract);
+
+double		scaling(t_range points);
 double		map(double unscaled_num, double new_min, double new_max, double old_min, double old_max);
 t_complex	sum(t_complex z1, t_complex z2);
 t_complex	square(t_complex z);
 
+int			julia_track(int x, int y, t_fractol *fract);
+
 //void		zoom_in(t_fractol *fract, double mouse_r, double mouse_i);
 //void		zoom_out(t_fractol *frac, double mouse_r, double mouse_i);
-void		instruction(void);
-int			handle_mouse(int btn, int x, int y, t_fractol *fract);
-int			handle_key(int key, t_fractol *fract);
-void		error(void);
-int 		handle_exit(t_fractol *fract);
-double		atodl(char *s);
+//void		malloc_error(void);
+//double		atodl(char *s);
 
 
 #endif

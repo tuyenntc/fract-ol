@@ -20,6 +20,7 @@ double	map(double unscaled_num, t_range new, t_range old)
 	return (((new.max - new.min) * (unscaled_num - old.min) / (old.max - old.min)) + new.min);
 }
 
+//double check max how many variables can be accepted in a function (norminette)
 double	map(double unscaled_num, double new_min, double new_max, double old_min, double old_max)
 {
 	return ((new_max - new_min) * (unscaled_num - old_min) / (old_max - old_min) + new_min);
@@ -34,15 +35,15 @@ imaginary part: 2 * x *yi
 t_complex	square(t_complex z)
 {
 	t_complex	result;
-	result.x = (z.x * z.x) - (z.y * z.y);
-	result.y = 2 * z.x * z.y;
+	result.r = (z.r * z.r) - (z.i * z.i);
+	result.i = 2 * z.r * z.i;
 	return (result);
 }
 
 t_complex	sum(t_complex z1, t_complex z2)
 {
 	t_complex	result;
-	result.x = z1.x + z2.x;
-	result.y = z1.y + z2.y;
+	result.r = z1.r + z2.r;
+	result.i = z1.i + z2.i;
 	return (result);
 }
