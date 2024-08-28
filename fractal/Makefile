@@ -11,6 +11,8 @@ MLX = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 X11 = -L/opt/X11/lib -I/opt/X11/include -lX11 -lXext
 PRINTF = $(PRINTF_DIR)/libftprintf.a
 
+#MLX = -L$(MLX_DIR) -lmlx -lX11 -lXext -lm
+#PRINTF = $(PRINTF_DIR)/libftprintf.a
 
 OBJ = $(SRC:.c=.o)
 
@@ -20,6 +22,9 @@ all: $(NAME)
 
 $(NAME): $(PRINTF) $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) $(MLX) $(X11) $(PRINTF) -o $(NAME)
+
+#$(NAME): $(PRINTF) $(OBJ)
+#	$(CC) $(CFLAGS) $(OBJ) $(MLX) $(PRINTF) -o $(NAME)
 
 $(PRINTF):
 	make -C $(PRINTF_DIR)

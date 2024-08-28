@@ -22,6 +22,18 @@ int key_hook(int keycode, t_data *data)
 	}
 	return (0);
 }
+/*
+int key_hook(int keycode, t_data *data)
+{
+    if (keycode == 65307) // ESC key on Linux
+    {
+        mlx_destroy_window(data->mlx, data->win);
+        exit(0);
+    }
+    return (0);
+}
+*/
+
 
 int	close_window(t_data *data)
 {
@@ -126,6 +138,15 @@ void	setup_hooks(t_data *data)
 	mlx_mouse_hook(data->win, mouse_hook, data);
 	mlx_hook(data->win, 17, 0, close_window, data);
 }
+/*
+void setup_hooks(t_data *data)
+{
+    mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
+    mlx_key_hook(data->win, key_hook, data);
+    mlx_mouse_hook(data->win, mouse_hook, data);
+    mlx_hook(data->win, 17, 0, close_window, data);
+}
+*/
 
 int main(int ac, char **av)
 {
