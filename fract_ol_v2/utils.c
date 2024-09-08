@@ -1,3 +1,4 @@
+
 #include "fractol.h"
 
 void	instructions(void)
@@ -11,6 +12,7 @@ void	instructions(void)
 	ft_printf("To decrease iterations:	Press key: -\n");
 	ft_printf("To rotate Julia:	Mouse left or right click\n");
 	ft_printf("To quit: Press key: ESC or click X on window, or ^C on command line\n");
+	ft_printf("To display julia set, provide 2 values within the range [-2.0 to 2.0]\n");
 	ft_printf("\nTry: <./fractol julia -0.4 +0.6> or\n<./fractol julia -0.835 -0.2321>\n");
 }
 
@@ -35,6 +37,14 @@ int ft_strncmp(char *s1, char *s2, int n)
 }
 
 
+# include <stdio.h>
+
+int	ft_isdigit(char c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
+}
 double	atodbl(char *s)
 {
 	long	int_part = 0;
@@ -43,26 +53,95 @@ double	atodbl(char *s)
 	int		sign = 1;
 	while (*s == 32 || (*s >= 9 && *s <= 13))
 		s++;
-	if (*s == '+' | *s == '-')
+	if (*s == '+' || *s == '-')
 	{
 		if (*s == '-')
 			sign = -1;
 		s++;
 	}
-	while (*s >= '0' && *s <= '9')
+	if (!ft_isdigit(*s) && *s != '.')
+	{
+		printf("error: invalid input\n");
+		return (0);
+	}
+	while (ft_isdigit(*s))
 		int_part = (int_part * 10) + (*s++ - '0');
 	if (*s == '.')
 	{
 		s++;
-		while (*s >= '0' && *s <= '9')
+		if (!ft_isdigit(*s))
+        {
+            printf("invalid input\n");
+            return 0;
+        }
+		while (ft_isdigit(*s))
 		{
 			pow /= 10;
 			fract_part += (*s++ - '0') * pow;
 		}
 	}
+	if (*s != '\0')
+	{
+		printf("invalid input\n");
+		return (0);
+	}
 	return ((int_part + fract_part) * sign);
 }
 /*
+//SHORT ATODBL - breaking into components
+
+#include <stdio.h>
+
+// Function to skip leading whitespace
+char *skip_whitespace(char *s) {
+    while (*s == 32 || (*s >= 9 && *s <= 13))
+        s++;
+    return s;
+}
+
+// Function to determine the sign and adjust the string pointer
+int get_sign(char **s) {
+    int sign = 1;
+    if (**s == '+' || **s == '-') {
+        if (**s == '-')
+            sign = -1;
+        (*s)++;
+    }
+    return sign;
+}
+
+// Function to convert integer part of the string to a long
+long get_integer_part(char **s) {
+    long int_part = 0;
+    while (**s >= '0' && **s <= '9')
+        int_part = (int_part * 10) + (*(*s)++ - '0');
+    return int_part;
+}
+
+// Function to convert fractional part of the string to a double
+double get_fractional_part(char **s) {
+    double fract_part = 0, pow = 1;
+    if (**s == '.') {
+        (*s)++;
+        while (**s >= '0' && **s <= '9') {
+            pow /= 10;
+            fract_part += (*(*s)++ - '0') * pow;
+        }
+    }
+    return fract_part;
+}
+
+// Main function to convert a string to a double
+double atodbl(char *s) {
+    s = skip_whitespace(s);
+    int sign = get_sign(&s);
+    long int_part = get_integer_part(&s);
+    double fract_part = get_fractional_part(&s);
+    return (int_part + fract_part) * sign;
+}
+
+
+
 int main(void)
 {
 	char	str[] = "-123.456";
@@ -74,6 +153,9 @@ int main(void)
     char *test5 = "-0.987";
     char *test6 = "   -45.67";
     char *test7 = "   +.42";
+    char *test8 = "123abd";
+    char *test9 = "abc 123";
+    char *test10 = "abc123";
 
 	double	result = atodbl(str);
 
@@ -86,10 +168,13 @@ int main(void)
     printf("Test 5: %s -> %f\n", test5, atodbl(test5));
     printf("Test 6: %s -> %f\n", test6, atodbl(test6));
     printf("Test 7: %s -> %f\n", test7, atodbl(test7));
+    printf("Test 8: %s -> %f\n", test8, atodbl(test8));
+    printf("Test 9: %s -> %f\n", test9, atodbl(test9));
+    printf("Test 10: %s -> %f\n", test10, atodbl(test10));
 	return (0);
 }
-*/
 
+*/
 void	zoom_in(t_fractol *fract, double mouse_r, double mouse_i)
 {
 	double zoomFactor;

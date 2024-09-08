@@ -1,7 +1,7 @@
 NAME = fractol
 SRC = main.c init.c render.c math.c utils.c event.c color.c
 
-CC = gcc
+CC = cc
 
 CFLAGS = -Wall -Wextra -Werror -I. -I/opt/X11/include -I../minilibx -I../ft_printf
 LDFLAGS = -L/opt/X11/lib -lX11 -lXext -L../minilibx -lmlx -framework OpenGL -framework AppKit

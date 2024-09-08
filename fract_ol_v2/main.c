@@ -14,6 +14,10 @@ int	main(int argc, char **argv)
 			fract.julia_r = atodbl(argv[2]);
 			fract.julia_i = atodbl(argv[3]); 
 		}
+		if (fract.julia_r > 2.0 || fract.julia_r < -2.0)
+			ft_printf("valid values belong to range -2.0 - 2.0\n");
+		if (fract,julia_i > 2.0 || fract.julia_i < -2.0)
+			ft_printf("valid values belong to range -2.0 - 2.0\n");
 		fractol_init(&fract);
 		fractol_render(&fract);
 		mlx_loop(fract.mlx_connect);
@@ -43,10 +47,18 @@ int main(int ac, char **av)
         fract.title = av[1];
         fract.julia_r = atodbl(av[2]);
         fract.julia_i = atodbl(av[3]);
-        fractol_init(&fract);
-        fractol_render(&fract);
-        mlx_loop(fract.mlx_connect);
-        return (0);
+		if ((fract.julia_r || fract.julia_i) > 2.0 || (fract.julia_r || fract.julia_i) < -2.0)
+		{
+			ft_printf("valid values belong to range -2.0 - 2.0\n");
+			exit(EXIT_FAILURE);
+		}
+		else
+		{
+			fractol_init(&fract);
+       		fractol_render(&fract);
+        	mlx_loop(fract.mlx_connect);
+        }
+		return (0);
 	}
 	else
 	{
